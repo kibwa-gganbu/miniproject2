@@ -11,12 +11,12 @@ app.use(morgan('dev'))
 var db;
 var databaseUrl = 'mongodb://127.0.0.1:27017/'
 
-app.get('/', (req, res) => {
-	//res.send('Web Server Started~!!')
-	res.sendFile('/Users/seonil/Desktop/workspace/miniproject2/homepage' + '/index.html')
-});
+// app.get('/', (req, res) => {
+// 	//res.send('Web Server Started~!!')
+// 	res.sendFile('/Users/seonil/Desktop/workspace/miniproject2/homepage' + '/index.html')
+// });
 
-app.get('/list', (req,res) => {	
+app.get('/', (req,res) => {	
 	mongoClient.connect(databaseUrl, function(err, database){
 		if(err != null){
 			res.json({'count':0})
