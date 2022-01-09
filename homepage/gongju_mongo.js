@@ -9,11 +9,11 @@ app.set('view engine', 'ejs');
 app.use(morgan('dev'))
 
 var db;
-var databaseUrl = 'mongodb://3.35.103.171:27017/'
+var databaseUrl = 'mongodb://127.0.0.1:27017/'
 
 app.get('/', (req, res) => {
 	//res.send('Web Server Started~!!')
-	res.sendFile('/data/gongju/homepage' + '/index.html')
+	res.sendFile('/Users/seonil/Desktop/workspace/miniproject2/homepage' + '/index.html')
 });
 
 app.get('/list', (req,res) => {	

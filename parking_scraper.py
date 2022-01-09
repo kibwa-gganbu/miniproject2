@@ -50,19 +50,21 @@ def get_parking_data():
     result["parking"][10] = result["parking"][10].replace("-", "")
     
     ## csv로 저장
-    os.chdir("/data/gongju/")
+    os.chdir("/Users/seonil/Desktop/workspace/miniproject2/")
     # print(os.getcwd() + " where")
     if not os.path.exists('gongju.csv'):
         # print(os.getcwd() + " not exist")
         ## 파일이름이 존재하지 않으면 그냥 저장
-        result.to_csv("/data/gongju/gongju.csv", mode='w', index=False, encoding="utf-8")
+        result.to_csv("/Users/seonil/Desktop/workspace/miniproject2/gongju.csv", mode='w', index=False, encoding="utf-8")
     else:
         # print(os.getcwd() + " not exist")
         ## 존재하면 삭제하고 저장
 #         result.to_csv("gongju.csv", mode='a', index=False, encoding="utf-8", header=False)
         #os.remove("gongju.csv")
-        result.to_csv("/data/gongju/gongju.csv", mode='w', index=False, encoding="utf-8")
-    
+        result.to_csv("/Users/seonil/Desktop/workspace/miniproject2/gongju.csv", mode='w', index=False, encoding="utf-8")
+
+get_parking_data()
+
 ## 언제 불러왔는지 확인을 위한 함수
 # def time_stamp():
 #     now = time.localtime()
@@ -72,7 +74,7 @@ def get_parking_data():
 #     print("Current time = ", str(current))
 
 # time_stamp()
-get_parking_data()
+
 #schedule.every(1).minutes.do(get_parking_data)
 #schedule.every(1).minutes.do(time_stamp)
 
