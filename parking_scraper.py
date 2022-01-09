@@ -46,9 +46,21 @@ def get_parking_data():
     ## DateType으로 변경
     result['datetm'] = pd.to_datetime(result['datetm'])
     
+    ## date 추출
+    result['date'] = result['datetm'].dt.date
+    ## hour 추출
+    result['hour'] = result['datetm'].dt.hour
+    ## minute 추출
+    result['minute'] = result['datetm'].dt.minute
+
     ## '-'가 나오는 데이터 전처리
     result["parking"][10] = result["parking"][10].replace("-", "")
     
+    convert_dict = {'parking': int,
+                    'parkingarea': int }  
+  
+    result = result.astype(convert_dict) 
+
     ## csv로 저장
     os.chdir("/Users/seonil/Desktop/workspace/miniproject2/")
     # print(os.getcwd() + " where")
