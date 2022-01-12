@@ -1,39 +1,23 @@
-const express = require('express')
-const morgan = require('morgan')
-const fs = require('fs')
-const path = require('path')
-const mongoClient = require('mongodb').MongoClient
-const app = express()
-app.set('port', process.env.PORT || 3000)
-app.set('view engine', 'ejs');
-app.use(morgan('dev'))
+const morgan = require('morgan');
+const fs = require('fs');
+const mysql = require('mysql');
+const mongoClient = require('mongodb').MongoClient;
+const express = require('express');
+const path = require('path');
+const php = require('php')
+const app = express();
+app.use(morgan('dev'));
 
-var db;
-var databaseUrl = 'mongodb://127.0.0.1:27017/'
+//app.set('views', path.join(__dirname, 'templates'))
+app.set('port', process.env.PORT || 3000);
+app.use(express.static(__dirname + '/public'));
 
-// app.get('/', (req, res) => {
-// 	//res.send('Web Server Started~!!')
-// 	res.sendFile('/Users/seonil/Desktop/workspace/miniproject2/homepage' + '/index.html')
-// });
-
-app.get('/', (req,res) => {	
-	mongoClient.connect(databaseUrl, function(err, database){
-		if(err != null){
-			res.json({'count':0})
-		}else{
-			db = database.db('test')
-			db.collection('gongju').find({}).toArray(function(err, result){
-				if(err) throw err
-				//console.log('result : ')
-				//console.log(result)
-				res.render('list.ejs', { data : result });
-			})
-		}
-	});
+app.get("/", (req,res) => {
+	res.render('index.html')
 });
 
 app.listen(app.get('port'), () =>{
 	console.log('서버 실행 중')
-
 });
+
 

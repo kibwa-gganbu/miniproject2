@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> GONG JU </title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <link href="./css/style.css" rel="stylesheet" type="text/css">
+</head>
+
+
+<body>
+    <h1> GONGJU OPENED </h1>
+    <%- include('./partials/navbar') %>
+
+    <table border=1>
+        <th> 날짜 </th>
+        <th> 층  </th>
+        <th> 주차 수 </th>
+        <th> 총 가능 수  </th>
+        <% for(let i=data.length-16; i < data.length ; i++){ %>
+            <tr>
+                <td> <%= data.datetm %> </td>
+                <td> <%= data.floor %> </td>
+                <td> <%= data.parking %> </td>
+                <td> <%= data.parkingarea %> </td>
+            </tr>
+        <% } %>
+    </table>
+
+
+
+
+</body>
+</html>
