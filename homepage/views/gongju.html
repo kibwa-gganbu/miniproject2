@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title> GongJu</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style type="text/css">
+      body {
+        text-align : center;
+      }
+      ul {
+          list-style-type: none;
+          margin: 0;
+          padding: 0;
+          width: 200px;
+          background-color: #f1f1f1;
+      }
+      li a {
+          display: block;
+          color: #000;
+          padding: 8px 16px;
+          text-decoration: none;
+      }
+      li a.active {
+          background-color: #4CAF50;
+          color: white;
+      }
+      li a:hover:not(.active) {
+          background-color: #555;
+          color: white;
+      }
+      td, th {
+      	text-align: center;
+      }
+
+      .center {
+        margin : auto;
+        text-align : center;
+      }
+
+  </style>
+  <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+
+    <script>
+      $(document).ready(function(){
+        $('.nav nav-pills').click(function() {
+          var get = '!!!';
+
+          $.ajax({
+            url: '/T1',
+            dataType: 'json'
+            type: 'GET',
+            data: {data:get},
+            success: function(result) {
+              if (result) {
+                console.log("hello")
+
+              }
+            }
+          });
+        });
+      });
+
+    </script>
+</head>
+
+<body>
+  <h1> 인천 국제 공항 주차장 혼잡도 </h1>
+  <br>
+
+  <ul class="nav center">
+          <li id="T1"><a href="/T1">T1여객터미널</a></li>
+          <li><a href="/T2">T2여객터미널</a></li>
+  </ul>
+  <br>
+
+  <table class="center" border=1>
+    <tr>
+    	<th> 날짜 </th>
+    	<th> 층  </th>
+    	<th> 주차 수 </th>
+    	<th> 총 가능 수  </th>
+    </tr>
+    <% for(let i=0; i < data.length ; i++){ %>
+      <tr>
+      	<td> <%= data[i].datetm %> </td>
+      	<td> <%= data[i].floor %> </td>
+      	<td> <%= data[i].parking %> </td>
+      	<td> <%= data[i].parkingarea %> </td>
+      </tr>
+    <% } %>
+  </table>
+  <br>
+
+  <div class="chart-container center" style="position: relative; height:10vh; width:45vh">
+      <canvas id="myChart"></canvas>
+  </div>
+
+  <script>
+
+      const ctx = document.getElementById('myChart').getContext('2d');
+      const myChart = new Chart(ctx, {
+          type: 'line',
+          data: {
+              labels: [0, 2, 4, 5, 'Purple', 'Orange', 4],
+              datasets: [{
+                  label: '# of Votes',
+                  data: [12, 19, 8, 3, 5, 2, 3],
+                  backgroundColor: [
+                      'rgba(255, 99, 132, 0.2)',
+                      'rgba(54, 162, 235, 0.2)',
+                      'rgba(255, 206, 86, 0.2)',
+                      'rgba(75, 192, 192, 0.2)',
+                      'rgba(153, 102, 255, 0.2)',
+                      'rgba(255, 159, 64, 0.2)'
+                  ],
+                  borderColor: [
+                      'rgba(255, 99, 132, 1)',
+                      'rgba(54, 162, 235, 1)',
+                      'rgba(255, 206, 86, 1)',
+                      'rgba(75, 192, 192, 1)',
+                      'rgba(153, 102, 255, 1)',
+                      'rgba(255, 159, 64, 1)'
+                  ],
+                  borderWidth: 1
+              }]
+          },
+          options: {
+              scales: {
+                  y: {
+                      beginAtZero: true
+                  }
+              }
+          }
+      });
+  </script>
+
+
+</body>
+</html>
