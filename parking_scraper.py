@@ -11,14 +11,14 @@ warnings.filterwarnings('ignore')
 
 ## 공공데이터 받아서 csv로 저장하는 함수
 def get_parking_data():
-    
+
     ## 공공데이터 API XML 받아오기
     url = 'http://openapi.airport.kr/openapi/service/StatusOfParking/getTrackingParking'
     params ={'serviceKey' : 'obo3NLKCOKTh7dl37Df5M9Ke+F8HpDedwqdNHhiVesI8nfLejJzOGHuuEQVRoLJ3t26GBQ3tt6hFeW9tKOXgng==', 'pageNo' : '1', 'numOfRows' : '20' }
     response = requests.get(url, params=params).text.encode('utf-8')
     xml = bs4.BeautifulSoup(response, 'lxml')
     rows = xml.findAll('item')
-    
+
     rowList = []
     nameList = []
     columnList = []
@@ -38,14 +38,14 @@ def get_parking_data():
         columnList = []
 
     result = pd.DataFrame(rowList, columns=nameList)
-    
+
     ## 초단위 삭제
     for i in range(len(result)):
         result.loc[i][0] = result.loc[i][0][:-6]
-    
+
     ## DateType으로 변경
     result['datetm'] = pd.to_datetime(result['datetm'])
-    
+
     ## date 추출
     result['date'] = result['datetm'].dt.date
     ## hour 추출
@@ -57,39 +57,22 @@ def get_parking_data():
     result["parking"][10] = result["parking"][10].replace("-", "")
     
     convert_dict = {'parking': int,
-                    'parkingarea': int }  
-  
-    result = result.astype(convert_dict) 
+                    'parkingarea': int }
+
+    result = result.astype(convert_dict)
 
     ## csv로 저장
-    os.chdir("/Users/seonil/Desktop/workspace/miniproject2/")
+    os.chdir("/data/gongju")
     # print(os.getcwd() + " where")
     if not os.path.exists('gongju.csv'):
         # print(os.getcwd() + " not exist")
         ## 파일이름이 존재하지 않으면 그냥 저장
-        result.to_csv("/Users/seonil/Desktop/workspace/miniproject2/gongju.csv", mode='w', index=False, encoding="utf-8")
+        result.to_csv("/data/gongju/gongju.csv", mode='w', index=False, encoding="utf-8")
     else:
         # print(os.getcwd() + " not exist")
         ## 존재하면 삭제하고 저장
 #         result.to_csv("gongju.csv", mode='a', index=False, encoding="utf-8", header=False)
         #os.remove("gongju.csv")
-        result.to_csv("/Users/seonil/Desktop/workspace/miniproject2/gongju.csv", mode='w', index=False, encoding="utf-8")
+        result.to_csv("/data/gongju/gongju.csv", mode='w', index=False, encoding="utf-8")
 
 get_parking_data()
-
-## 언제 불러왔는지 확인을 위한 함수
-# def time_stamp():
-#     now = time.localtime()
-#     current = "%04d-%02d-%02d %02d:%02d:%02d" % \
-#         (now.tm_year, now.tm_mon, now.tm_mday,
-#             now.tm_hour, now.tm_min, now.tm_sec)
-#     print("Current time = ", str(current))
-
-# time_stamp()
-
-#schedule.every(1).minutes.do(get_parking_data)
-#schedule.every(1).minutes.do(time_stamp)
-
-#while True:
-#    schedule.run_pending()
-#    time.sleep(1)
