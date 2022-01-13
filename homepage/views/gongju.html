@@ -11,6 +11,12 @@
 
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    function goURL(url)
+    {
+      targetURL.document.location.href= "/list?floor=" + url;
+    }
+  </script>
   <style type="text/css">
       *, p{
             font-family: 'Dongle', sans-serif;
@@ -89,7 +95,17 @@
   </table>
   <br>
 
-  <iframe class="iframe-preview center" width="30%" height="300px" style="border:none;" src="http://3.35.103.171:3000/list"></iframe>
+  <div>
+    <label for="park">Choose a parking:</label>
+      <select id="park" onChange="javascript:goURL(this.value)">
+        <option value="">--Please choose an option--</option>
+        <% for(let i=0; i < data.length ; i++){ %>
+          <option value="<%= data[i].floor %>"><%= data[i].floor %></option>
+        <% } %>
+      </select>
+  </div>
+
+  <iframe name=targetURL class="iframe-preview center" width="30%" height="300px" style="border:none;" src="http://3.35.103.171:3000/list"></iframe>
 
 
 </body>
